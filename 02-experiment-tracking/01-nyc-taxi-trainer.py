@@ -1,3 +1,4 @@
+import pickle
 import warnings
 
 import mlflow
@@ -5,6 +6,7 @@ import pandas as pd
 import xgboost as xgb
 from dotenv import load_dotenv
 from sklearn.feature_extraction import DictVectorizer
+from sklearn.metrics import mean_squared_error
 
 warnings.filterwarnings("ignore")
 
@@ -63,16 +65,14 @@ def main():
     valid = xgb.DMatrix(X_val, label=y_val)
 
     best_params = {
-        "learning_rate": 0.2526805505341685,
-        "max_depth": 21,
-        "min_child_weight": 1.4699844585464745,
+        "learning_rate": 0.3214173396011475,
+        "max_depth": 92,
+        "min_child_weight": 1.604667145599219,
         "objective": "reg:linear",
-        "reg_alpha": 0.03181433933064131,
-        "reg_lambda": 0.0050476303572755754,
+        "reg_alpha": 0.03537825375271799,
+        "reg_lambda": 0.007233385550663513,
         "seed": 42,
     }
-
-    mlflow.xgboost.autolog()
 
     best_model = xgb.train(
         params=best_params,
@@ -81,6 +81,23 @@ def main():
         evals=[(valid, "validation")],
         early_stopping_rounds=25,
     )
+
+    # evaluate model
+    y_pred = best_model.predict(valid)
+    rmse = mean_squared_error(y_val, y_pred, squared=False)
+    mlflow.log_metric("validation-rmse", rmse)
+
+    # log model
+    mlflow.xgboost.log_model(best_model, artifact_path="models")
+
+    # log preprocessor artifact
+    preprocessor_path = "./models/preprocessor.bin"
+    with open(preprocessor_path, "wb") as f_out:
+        pickle.dump(dv, f_out)
+    mlflow.log_artifact(preprocessor_path, artifact_path="preprocessor")
+
+    # note:
+    # jangan pakai autolog, karena rawan bug
 
 
 if __name__ == "__main__":
