@@ -1,3 +1,4 @@
 {
-  "main-flow": "03-workflow-orchestration/3.4/orchestrate.py:main_flow"
+  "main-flow": "03-workflow-orchestration/3.5/orchestrate.py:main_flow",
+  "main-flow-s3": "03-workflow-orchestration/3.5/orchestrate_minio.py:main_flow_s3"
 }

@@ -19,26 +19,27 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name:
+- name: taxi-local-data
   version:
   tags: []
-  description:
-  schedule: {}
-  flow_name:
-  entrypoint:
-  parameters: {}
-  work_pool:
-    name:
-    work_queue_name:
-    job_variables: {}
-- name: taxi-1
-  version:
-  tags: []
-  description: The main training pipeline
-  entrypoint: 03-workflow-orchestration/3.4/orchestrate.py:main_flow
+  description: The main training pipeline with local dataset
+  entrypoint: 03-workflow-orchestration/3.5/orchestrate.py:main_flow
   parameters: {}
   work_pool:
     name: zoompool
     work_queue_name:
     job_variables: {}
   schedule:
+- name: taxi-s3-data
+  version:
+  tags: []
+  description: The main training pipeline with s3 dataset
+  entrypoint: 03-workflow-orchestration/3.5/orchestrate_minio.py:main_flow_s3
+  parameters: {}
+  work_pool:
+    name: zoompool
+    work_queue_name:
+    job_variables: {}
+  schedule:
+
+# prefect deploy --all -> deploy all flows
