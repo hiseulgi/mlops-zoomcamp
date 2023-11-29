@@ -1,0 +1,66 @@
+# for updating file on minio s3
+# prefect deployment build -sb "remote-file-system/your-storage-block-name" -n "mlops-zoomcamp" "flow.py:greetings"
+
+###
+### A complete description of a Prefect Deployment for flow 'main-flow'
+###
+name: mlops-zoomcamp
+description: The main training pipeline
+version: 839407b015433653a2aa8171002d20b1
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: main-flow
+manifest_path: null
+storage:
+  basepath: s3://mlops-zoomcamp
+  settings:
+    key: NrSKGyspQzXnR6VKpXk3
+    secret: x75gGhGvuCuAiTyKGK8tdwJoyLTXVAUX8N13QNKG
+    client_kwargs:
+      endpoint_url: http://localhost:9000
+  _block_document_id: 5b440113-a495-4c4c-a7ab-3bc90be0f62b
+  _block_document_name: mlops-zoomcamp
+  _is_anonymous: false
+  block_type_slug: remote-file-system
+  _block_type_slug: remote-file-system
+path: ''
+entrypoint: 03-workflow-orchestration/3.5/orchestrate.py:main_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    train_path:
+      title: train_path
+      default: ./data/green_tripdata_2021-01.parquet
+      position: 0
+      type: string
+    val_path:
+      title: val_path
+      default: ./data/green_tripdata_2021-02.parquet
+      position: 1
+      type: string
+  required: null
+  definitions: null
+timestamp: '2023-11-29T04:42:56.106938+00:00'
+triggers: []
+enforce_parameter_schema: null
