@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+    server:
+        build: ./
+        image: ride-duration-prediction-server:mlflow-v1
+        restart: always
+        ports:
+            - 9696:9696
+        volumes:
+            - ./env:/app/env
+        entrypoint: [ "gunicorn", "--bind=0.0.0.0:9696", "main:app" ]
