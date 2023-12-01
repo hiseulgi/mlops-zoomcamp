@@ -1,0 +1,1 @@
+Tak skip bang, belum saya pelajari karena optional dan perlu AWS(bayar hikss)
