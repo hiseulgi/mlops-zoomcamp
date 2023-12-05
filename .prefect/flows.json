@@ -1,4 +1,5 @@
 {
   "main-flow": "03-workflow-orchestration/3.5/orchestrate.py:main_flow",
-  "main-flow-s3": "03-workflow-orchestration/3.5/orchestrate_minio.py:main_flow_s3"
+  "main-flow-s3": "03-workflow-orchestration/3.5/orchestrate_minio.py:main_flow_s3",
+  "ride-duration-prediction": "04-deployment/batch/main.py:ride_duration_prediction"
 }
